@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>LaRossa Admin</title>
+  <style>
+    body { font-family: Inter, sans-serif; background: #fff; color: #000; padding: 20px; }
+    .login { max-width: 300px; margin: 100px auto; text-align: center; }
+    input, button { width: 100%; padding: 10px; margin-top: 10px; border-radius: 6px; border: 1px solid #ccc; }
+    button { background: #000; color: #fff; cursor: pointer; }
+    button:hover { background: #2ecc71; }
+    .review { border: 1px solid #eee; padding: 10px; border-radius: 8px; margin: 10px 0; background: #fafafa; }
+    .del { background: #ff4d4d; margin-top: 8px; }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div class="login" id="login">
+      <h2>Admin Login</h2>
+      <input type="password" id="pwd" placeholder="Пароль">
+      <button onclick="login()">Кіру</button>
+      <p id="error" style="color:red;display:none;">Қате пароль!</p>
+    </div>
+
+    <div id="panel" style="display:none;">
+      <h2>Отзывтарды басқару</h2>
+      <div id="reviews"></div>
+    </div>
+  </div>
+
+  <script>
+    const ADMIN_PASS = "nurs2005"; // пароль
+
+    function login(){
+      const p = document.getElementById('pwd').value;
+      if(p === ADMIN_PASS){
+        document.getElementById('login').style.display = "none";
+        document.getElementById('panel').style.display = "block";
+        renderReviews();
+      } else {
+        document.getElementById('error').style.display = "block";
+      }
+    }
+
+    function renderReviews(){
+      const reviewsDiv = document.getElementById('reviews');
+      const arr = JSON.parse(localStorage.getItem('lr-reviews')||'[]');
+      reviewsDiv.innerHTML = "";
+      arr.forEach((r,i)=>{
+        const div = document.createElement('div');
+        div.className = "review";
+        div.innerHTML = `
+          <strong>${r.name}</strong> ⭐${r.rating}<br>
+          <p>${r.text}</p>
+          <button class="del" onclick="delReview(${i})">Удалить</button>
+        `;
+        reviewsDiv.appendChild(div);
+      });
+    }
+
+    function delReview(i){
+      const arr = JSON.parse(localStorage.getItem('lr-reviews')||'[]');
+      arr.splice(i,1);
+      localStorage.setItem('lr-reviews', JSON.stringify(arr));
+      renderReviews();
+    }
+  </script>
+</body>
+</html>
