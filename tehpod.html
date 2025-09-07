@@ -1,0 +1,1462 @@
+<!DOCTYPE html>
+<html lang="kz">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="images/logo2.jpg" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <title>LA-ROSSA - FAQ 🤔</title>
+    <meta name="description" content="">
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #000000;
+            margin: 0;
+            padding: 10px;
+        }
+
+        p {
+            color: rgb(255, 255, 255);
+        }
+
+        li {
+            color: rgb(255, 255, 255);
+        }
+
+        h2 {
+            font-size: 22px;
+            font-weight: bold;
+            margin: 15px 0;
+            color: rgb(255, 255, 255);
+        }
+
+        h5 {
+            color: rgb(255, 255, 255);
+        }
+
+        /* --- CATEGORY SCROLL --- */
+        .scroll-gallery {
+            display: flex;
+            overflow-x: auto;
+            gap: 15px;
+            padding: 10px 0;
+        }
+
+        .scroll-item {
+            flex: 0 0 auto;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 10%;
+            border: 3px solid rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 5px;
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        .scroll-item.active .circle {
+            border-color: black;
+        }
+
+        .circle img {
+            width: 140px;
+            height: 140px;
+            border-radius: 10%;
+            object-fit: cover;
+        }
+
+        .scroll-item p {
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .scroll-gallery::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* --- MENU GRID --- */
+        .menu-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .product-card {
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 10px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s ease;
+            padding-bottom: 10px;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease-out forwards;
+        }
+
+        .product-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .product-image {}
+
+        .product-image img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-bottom: 1px solid #eee;
+        }
+
+        .product-info {
+            padding: 10px;
+        }
+
+        .product-info h3 {
+            font-size: 15px;
+            font-weight: bold;
+            margin: 0 0 5px;
+        }
+
+        .price {
+            font-size: 15px;
+            font-weight: bold;
+            background: #e0e0e062;
+            padding: 5px 10px;
+            border-radius: 4px;
+            display: inline-block;
+            text-align: center;
+            width: 50%;
+        }
+
+        .options {
+            display: flex;
+            gap: 5px;
+            padding: 0 10px;
+            flex-wrap: wrap;
+        }
+
+        .options label {
+            flex: 1;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            text-align: center;
+            padding: 4px 0;
+            cursor: pointer;
+            font-size: 13px;
+            background: #fff;
+            transition: background 0.2s ease;
+            min-width: 50px;
+        }
+
+        .options input[type="radio"] {
+            display: none;
+        }
+
+        .options input[type="radio"]:checked+label {
+            background: #fff;
+            border-color: #000;
+            font-weight: bold;
+        }
+
+        @media (max-width: 1024px) and (min-width: 481px) {
+            .menu-container {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .menu-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .product-image img {
+                height: 150px;
+            }
+
+            .product-info h3 {
+                font-size: 14px;
+            }
+
+            .price {
+                font-size: 14px;
+            }
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* --- POPUP --- */
+        .popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 999;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .popup-content {
+            background: #fff;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 700px;
+            display: flex;
+            flex-direction: column;
+            animation: slideIn 0.3s ease forwards;
+            max-height: 90%;
+            overflow-y: auto;
+            margin: auto;
+            box-sizing: border-box;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: flex-start;
+            padding: 10px;
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .popup-body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .popup-body img {
+            width: 100%;
+            height: auto;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            border-radius: 30px;
+        }
+
+        .popup-details {
+            padding: 15px;
+        }
+
+        .popup-details h2 {
+            margin: 10px 0;
+        }
+
+        .popup-price {
+            font-weight: bold;
+            font-size: 18px;
+            color: #000;
+            margin-bottom: 10px;
+        }
+
+        /* @media (min-width: 768px) {
+    .popup-body {
+      flex-direction: row;
+    }
+    .popup-body img {
+      width: 50%;
+      height: auto;
+      border-radius: 20px 0 0 20px;
+    }
+    .popup-details {
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+  } */
+
+        @media (max-width: 768px) {
+            .popup-content {
+                width: 100%;
+                height: 100%;
+                max-width: none;
+                max-height: none;
+                border-radius: 0;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .category-title {
+            width: 100%;
+            text-align: left;
+            font-size: 1.7em;
+            font-weight: bold;
+            margin: 10px 0 10px;
+            padding-left: 5px;
+            color: #333;
+            font-family: "kzmoumenta", sans-serif;
+            grid-column: 1/3;
+        }
+
+        @media (min-width:480px) {
+            .category-title {
+                grid-column: 1/4;
+            }
+        }
+
+        @media (min-width:1000px) {
+            .category-title {
+                grid-column: 1/5;
+            }
+        }
+
+
+        .header {
+            position: relative;
+            height: 100vh;
+            background: url('a61c6024-4302-4616-9933-d1a7289f0c8e.png') center/cover no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 24px;
+            color: green;
+            font-weight: bold;
+        }
+
+        .menu-btn {
+            background: green;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .menu-btn:hover {
+            background: darkgreen;
+        }
+
+        /* Карточкалар */
+        .cards {
+            padding: 50px 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .card img {
+            width: 100%;
+            height: auto;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .card h3 {
+            margin: 15px 0;
+            color: green;
+        }
+
+        .footer {
+            background: #fff;
+            padding: 20px;
+            margin-left: -10px;
+            margin-right: -10px;
+            margin-top: 50px;
+            border-top-left-radius: 30px;
+            border-top-right-radius: 30px;
+            box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.05);
+            padding-bottom: 100px;
+        }
+
+        .footer-top {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .footer-logo {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .footer-logo img {
+            height: 50px;
+            border-radius: 5px;
+            width: 60px;
+            height: 60px;
+            margin-bottom: 10px;
+        }
+
+        .footer-logo h2 {
+            margin-top: -5px;
+        }
+
+        .footer-socials a img {
+            width: 35px;
+            margin: 0 10px;
+            background: #f8f8f8;
+            padding: 8px;
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+
+        .footer-socials a:hover img {
+            background: #e5e5e5;
+        }
+
+        .footer hr {
+            margin: 20px 0;
+            border: none;
+            border-top: 1px solid #ddd;
+        }
+
+        .footer-bottom {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .footer-bottom .developer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-bottom .developer img {
+            height: 50px;
+
+        }
+
+        @media (min-width: 600px) {
+            .footer-top {
+                flex-direction: row;
+                justify-content: space-around;
+                align-items: center;
+            }
+
+            .footer-bottom {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+        }
+
+
+        /* Ортақ стиль */
+        .floating-btn {
+            position: fixed;
+            bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 15px;
+            border-radius: 50px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 500;
+            text-decoration: none;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(20px);
+            transition: opacity 0.4s ease, transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        /* Сол жақтағы жоғары түймесі */
+        .floating-btn.left {
+            left: 20px;
+            background: #3b3b3ba2;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            justify-content: center;
+            border: none;
+        }
+
+        /* Оң жақтағы WhatsApp */
+        .floating-btn.right {
+            right: 20px;
+            background: #3b3b3ba2;
+        }
+
+        /* WhatsApp суреті */
+        .floating-btn.right img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            margin-top: 3px;
+            margin-bottom: 3px;
+            margin-right: 3px;
+            z-index: inherit;
+        }
+
+        /* Пульс эффект */
+        .floating-btn.right::before {
+            content: '';
+            position: absolute;
+            right: -2px;
+            width: 55px;
+            height: 55px;
+            background: #006301;
+            border-radius: 50%;
+            animation: pulse 4s infinite ease-out;
+            z-index: -1;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(0.5);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1);
+                opacity: 1.5;
+            }
+
+            100% {
+                transform: scale(1.6);
+                opacity: 0;
+            }
+        }
+
+        /* Актив кезде */
+        .floating-btn.show {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        .navi img {
+            width: 110px;
+            border-radius: 5px;
+            margin-left: 15px;
+        }
+
+        .navi {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            height: 70px;
+            align-items: center;
+            background-color: #ffffff;
+            margin-bottom: 0px;
+            margin-left: -10px;
+            margin-right: -10px;
+            margin-top: 0px;
+            margin-bottom: 20px;
+            box-shadow: 0px 0px 3px 0px rgb(223, 223, 223);
+            border-radius: 10px;
+        }
+
+        .head {
+            display: flex;
+            justify-content: center;
+        }
+
+        .navi {}
+
+
+
+
+        .filter-panel {
+            margin-bottom: 15px;
+            grid-column: 1/3;
+        }
+
+        .filter-panel input[type="text"] {
+            flex: 1;
+            padding: 10px 12px;
+            font-size: 14px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #fff;
+            transition: border 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .filter-panel input[type="text"]:focus {
+            border-color: #4CAF50;
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+            outline: none;
+        }
+
+        @media (min-width:480px) {
+            .filter-panel {
+                grid-column: 1/4;
+            }
+        }
+
+        @media (min-width:980px) {
+            .filter-panel {
+                grid-column: 1/5;
+            }
+        }
+
+
+        /* Stories қатар */
+        .stories {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            scrollbar-width: none;
+            /* Firefox */
+        }
+
+        .stories::-webkit-scrollbar {
+            display: none;
+            /* Chrome, Safari */
+        }
+
+        /* Story рамкасы */
+        .story {
+            min-width: 120px;
+            height: 180px;
+            border-radius: 12px;
+            padding: 3px;
+            background: linear-gradient(270deg, #0f3d0f, #145214, #1a661a, #145214, #0f3d0f);
+            background-size: 400% 400%;
+            animation: borderMove 6s ease infinite;
+            cursor: pointer;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease;
+        }
+
+        .story:hover {
+            transform: scale(1.02);
+        }
+
+        @keyframes borderMove {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Preview сурет */
+        .story img {
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            border: 2px solid #fff;
+            object-fit: cover;
+        }
+
+        /* Fullscreen popup */
+        .storyPopup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+
+            to {
+                opacity: 0;
+            }
+        }
+
+        /* Жабу батырмасы */
+        .storyCloseBtn {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            font-size: 78px;
+            color: rgb(55, 55, 55);
+            cursor: pointer;
+            z-index: 1100;
+            transition: transform 0.2s ease;
+        }
+
+        .storyCloseBtn:hover {
+            transform: rotate(90deg) scale(1.02);
+        }
+
+        /* Popup ішінде сурет */
+        .storyPopupContent {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .storyPopupContent img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* Подробнее батырмасы */
+        .storyDetailsBtn {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 20px;
+            border-radius: 6px;
+            background: #145214;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: none;
+        }
+
+        .storyDetailsBtn:hover {
+            background: #1a661a;
+            transform: translateX(-50%) scale(1.05);
+        }
+
+
+
+
+
+
+
+
+        * {
+            box-sizing: border-box
+        }
+
+
+        a {
+            color: inherit
+        }
+
+
+
+        :root {
+            --bg: #0f1115;
+            --card: #151923;
+            --muted: #8b93a7;
+            --text: #e8ecf3;
+            --accent: #5b8cff;
+            --accent-2: #35d0a3;
+            --danger: #ff6b6b;
+            --shadow: 0 10px 30px rgba(0, 0, 0, .35);
+            --radius: 14px;
+        }
+
+        /* Header */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 30;
+            backdrop-filter: blur(10px);
+            background: rgba(15, 17, 21, .85);
+            border-bottom: 1px solid rgba(255, 255, 255, .06);
+        }
+
+        .wrap {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 14px 16px;
+            display: flex;
+            gap: 14px;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            letter-spacing: .5px
+        }
+
+        .brand .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            box-shadow: 0 0 12px var(--accent)
+        }
+
+        .filters {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap
+        }
+
+        .tabs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap
+        }
+
+        .tab {
+            color: white;
+            padding: 8px 12px;
+            border: 1px solid rgba(255, 255, 255, .1);
+            border-radius: 10px;
+            cursor: pointer;
+            background: #111521;
+            transition: .2s
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, rgba(91, 140, 255, .18), rgba(53, 208, 163, .18));
+            border-color: rgba(255, 255, 255, .2)
+        }
+
+        .sort {
+            display: flex;
+            align-items: center;
+            gap: 8px
+        }
+
+        select {
+            background: #111521;
+            border: 1px solid rgba(255, 255, 255, .12);
+            color: var(--text);
+            padding: 8px 12px;
+            border-radius: 10px;
+        }
+    </style>
+    
+</head>
+
+
+
+
+<body>
+
+    <!-- <div class="head">
+          <div class="navi">
+              <img src="images/logo2.jpg" alt="" style="width: 65px; margin-left: 5px;">
+              
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: #f1f1f1; border-radius: 50px; padding: 5px; padding-left: 10px; padding-right: 10px; display: flex; align-items: center; justify-content: space-between; font-size: 1em; margin-right: 10px;">
+                <ion-icon size="small" name="ios-globe" style="margin-right: 4px;"></ion-icon>
+                kz
+              </a>
+              <ul class="dropdown-menu" style="padding-left: 10px; margin-right: 50px;">
+                  <li><a class="dropdown-item" href="/" style="font-weight: bold; background-color: #f1f1f1; border-radius: 30px; width: 80%;">🇰🇿 Қазақша</a></li>
+                  <li><a class="dropdown-item" href="ru.html">🇷🇺 Орысша</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="#"></a></li>
+              </ul>
+          </div>
+      </div> -->
+
+
+    <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+        tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalToggleLabel" style="color: #000;">Certificate💌</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <b style="font-size: 1.4em;">🎁 Подарочный сертификат LAROSSA</b><br><br>
+                    Жақындарыңызды ерекше қуантқыңыз келе ме? <br><br><u>LAROSSA</u>-ның подарочный сертификаты — мінсіз
+                    таңдау! Әр адам өз талғамына сай өнімді өзі таңдап алады. Сіз сыйлық іздеп әуре болмайсыз, ал ол
+                    болса шынымен қалағанын алады. <br><br>
+                    Сертификат түрлі номиналдарда қолжетімді. Туған күнге, мерекеге немесе жай ғана қуаныш сыйлауға
+                    тамаша мүмкіндік. <u>LAROSSA</u> сыйлығы — әрдайым есте қалады.
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal"
+                        data-bs-dismiss="modal">Certificate💌</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
+        tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalToggleLabel2" style="color: #000;">Certificate💌</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <b style="font-size: 1.4em;">🎁 Подарочный сертификат</b> <br><br>
+                    Қазір қолжетімсіз. Жақында сіз үшін қосамыз ✨
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal"
+                        data-bs-dismiss="modal">Артқа қайту↩️</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+    <!-- <nav class="navbar navbar-expand-lg navbar-light bg-white"
+        style="border-radius: 10px; background: linear-gradient(180deg, rgba(0, 0, 0, 0.753), #000000);">
+        <div class="container-fluid">
+            <a class="navbar-brand kzromulc" href="#" style="color: white;">LA-ROSSA</a>
+
+
+        </div>
+    </nav> -->
+
+    <!-- Topbar -->
+    <div class="topbar" style="margin: -10px;">
+        <div class="wrap">
+            <div class="brand"><span class="dot"></span> <span><a href="#">
+                        <img src="images/logo2.jpg" alt="logo" style="width: 70px; border-radius: 10px;">
+                    </a></span></div>
+            <div class="filters">
+                <div class="tabs" id="tabs">
+                    <a href="#biz" style="text-decoration: none;"><button class="tab active" style="width: ұ0px; height: 33px; font-size: 13.5px; display: flex; align-items: center; justify-content: center;">Біз жайлы</button></a>
+                    <a href="#faqs" style="text-decoration: none;"><button class="tab " style="width: 75px; height: 33px; font-size: 13.5px; display: flex; align-items: center; justify-content: center;">FAQ</button></a>
+                    <a href="trec.html" style="text-decoration: none;"><button class="tab" style="width: 90px; height: 33px; font-size: 13.5px; display: flex; align-items: center; justify-content: center;">Доставка</button></a>
+                    <a href="tel://87781473353" target="_blank" style="text-decoration: none;"><button class="tab active" style="width: 76px; height: 33px; font-size: 13.5px; display: flex; align-items: center; justify-content: center;">Байланыс</button></a>
+                </div>
+                <div class="sort">
+                    <!-- <label for="sortSel" class="sr"></label>
+                    <select id="sortSel">
+                        <option value="popular">Сұраныс (әдепкі)</option>
+                        <option value="price-asc">Баға жоғарылау ↑</option>
+                        <option value="price-desc">Баға төмендеу ↓</option>
+                        <option value="name-asc">Атауы А–Я</option>
+                    </select> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+    <header style="margin-top: 20px;">
+
+
+
+
+    </header>
+    <div class="d" id="biz"></div>
+    <div class="comunity">
+        <img src="" alt="">
+        <h2>Біз туралы қысқа сипаттамалар😄</h2>
+        <ul>
+            <li>«SMM-шымыз – сторис салмаса, қолы дірілдеп кетеді 📱😂»</li>
+            <li>«Директорымыз – парфюм иісін 1 км жерден таниды 👃✨»</li>
+            <li>«Сату менеджеріміз – тек тауар сатпайды – көңіл-күй, сенім және бонус ретінде жақсы тарих сатады!»</li>
+            <li>«Қоймадағы жігіт(логистик) – парфюмді тезірек жеткізгісі келіп, қорапты өзі иіскеп қояды 📦😅»</li>
+            <li>«Жеткізушіміз – семіз мысықтан да қысқа жолды табады 🐈🗺️»</li>
+        </ul>
+
+    </div>
+    <br>
+    <br>
+    <br>
+    <div class="bailan" style="font-size: 1.2em; color: rgb(255, 255, 255);">
+        <b style="font-size: 1.3em; text-align: center;">🛠️ Техподдержка LAROSSA </b><br><br>
+
+        <h6 style=" font-size: 0.9em;" class="lora">
+            <b style="font-size: 1.3em;" class="alice">📦 Жеткізу және қайтару</b><br><br>
+            Біз тапсырысты Қазақстан бойынша жеткіземіз. <br> Жеткізу уақыты 1–7 жұмыс күні аралығында.
+            Тауар сәйкес келмесе немесе ақауы болса, 14 күн ішінде қайтарып немесе ауыстыра аласыз. <br><br>
+            <b style="font-size: 1.3em;" class="alice">💳 Төлем тәсілдері</b><br><br>
+            Сізге ыңғайлы болу үшін бірнеше төлем түрін ұсынамыз:
+            Банктік карта (Visa, Kaspi, Halyk)
+            Kaspi Red бөліп төлеу
+            Қолма-қол (курьерге жеткізу кезінде) <br><br>
+            <b style="font-size: 1.3em;" class="alice">🏷️ Жеңілдіктер мен акциялар</b><br><br>
+            LAROSSA өз клиенттерін әрқашан қуантады!
+            Маусымдық жеңілдіктер, арнайы ұсыныстар және эксклюзивті акцияларды бірінші болып алу үшін біздің <a href="https://www.instagram.com/larossa.perfume?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==">Instagram</a>
+            <a id="bailan">стористерді қадағалаңыз 📸✨</a><br><br><br>
+        </h6>
+
+
+
+        <h5 style="margin-top: 50px; margin-bottom: 30px; font-size: 1.8em;">Хабарласу</h5>
+        Байланыс үшін: <br>
+        📞 Телефон: +7 (778) 147 3353<br>
+        📧 Email: larossa@mail.ru <br>
+        💬 WhatsApp / Telegram: +7 (778) 147 3353 <br> <br>
+
+
+        Жұмыс уақыты: <br>
+        Дүйсенбі – Жұма: 10:00 – 20:00 <br>
+        Сенбі – Жексенбі: 10:00 – 18:00 <br> <br><br>
+
+
+
+        Қолдау түрлері: <br>
+        🚚 Тапсырысты қадағалау <br>
+        💳 Төлем және қайтарым мәселелері <br>
+        <a id="faqs">🎁 Сертификат және жеңілдіктер</a> <br>
+        📦 Жеткізу мен жеткізілмеген тауар <br>
+        🔧 Сайттағы техникалық ақаулар <br>
+
+    </div>
+
+
+
+    <h5 style="margin-top: 100px; margin-bottom: 30px; font-size: 1.8em;">Жиі қойылатын сұрақтар 🤔💡</h5>
+    <div class="accordion" id="accordionExample" style="background-color: rgb(243, 242, 242); border-radius: 10px;">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                    aria-expanded="true" aria-controls="collapseOne">
+                    1. Подарочный сертификатты қалай алады? Оны қалай қолданамыз?
+                </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <b>Подарочный сертификат бөлімі әлі разработкада! Жақында қосамыз!</b>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    2. Қай қалаларда орналасқансыздар?
+                </button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <b>Бізде қазіргі таңда 1 филиал🔽</b> <br><br>
+                    Алматы қаласы , Төле би 189А , 2 этаж (Төле би/Розыбакиев қиылысы)
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingThree">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    3. Возврат жасауға болама?
+                </button>
+            </h2>
+            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <b>ҚР «Тұтынушылардың құқықтарын қорғау туралы» Заңы және ҚР Үкіметінің 2011 жылғы 30 қарашадағы № 1444 қаулысымен бекітілген қайтарылмайтын тауарлар тізімі.</b> <br><br>
+
+Осы тізімге кіретін тауарлар: <br>
+	<b>
+        •	жеке гигиена заттары; <br>
+        •	парфюм және косметика бұйымдары; <br>
+        •	іш киімдер және т.б.
+    </b> <br><br>
+
+👉 Яғни, егер парфюм сапалы болса (қаптамасы ашылмаған болса да), оны жәй ғана ұнамағаны үшін қайтаруға немесе ауыстыруға болмайды. <br><br>
+
+<b>Бірақ!</b> <br>
+Егер тауардың кемшілігі болса (мысалы, бөтелкесі сынық, сорғышы жұмыс істемейді) – онда заң бойынша сіз оны қайтарып беруге немесе ауыстыруға құқылысыз.
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingFour">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                   4. Доставка Қазақстан бойыншама? Оғанда ақша төлейміз бе?
+                </button>
+            </h2>
+            <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
+                data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    Біз өз клиенттерімізге ыңғайлы әрі жылдам жеткізуді ұсынамыз: <br><br>
+	<b>•	Алматы қаласы бойынша:</b> <br>
+– тапсырыс бергеннен кейін 1–2 сағат ішінде тегін курьерлік жеткізу жасаймыз; <br> <br>
+	<b>•	Қазақстанның басқа қалаларына:</b> <br>
+– Қазпошта арқылы тегін жеткізу (қалыпты мерзімі 4-7 күн); <br>
+– қосымша жылдам жеткізу қажет болса, поезд немесе InDriver арқылы жібереміз (бұл қызмет ақылы, бағасы қала мен қашықтыққа байланысты).
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading5">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapse5" aria-expanded="false" aria-controls="collapse5">
+                    5. Парфюмдерде стойкость қалай? Қанша күн тұрады?
+                </button>
+            </h2>
+            <div id="collapse5" class="accordion-collapse collapse" aria-labelledby="heading5"
+                data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    Біздің парфюмерияның негізгі артықшылығы — ерекше ұзақ сақталатын аромат. Әр флакон жоғары концентрациялы парфюмерлік майлардан жасалады, сондықтан хош иісіңіз: <br>
+	•	72 сағатқа дейін теріде сақталады; <br>
+	•	киімде немесе шашта тіпті одан да ұзақ сезіледі; <br>
+	•	күн бойы шлейфін жоғалтпай, ашық әрі айқын болып қала береді. <br> <br>
+<b>Бұл — қысқа уақытқа ғана емес, ұзақ әсер қалдыратын хош иіс іздейтіндер үшін мінсіз шешім.</b>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading6">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapse6" aria-expanded="false" aria-controls="collapse6">
+                    6. Төлем Kaspi мен болама?
+                </button>
+            </h2>
+            <div id="collapse6" class="accordion-collapse collapse" aria-labelledby="heading6"
+                data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                     Хош иіс ұзақ сақталуы үшін оны тікелей күн сәулесінен, ыстық орындардан аулақ ұстау керек. Салқын әрі қараңғы жерде сақтасаңыз жеткілікті. Тоңазытқышқа қоюдың қажеті жоқ, ол иісіне әсер етуі мүмкін.
+<br><br>Мем: «Тоңазытқышқа қойып жатқанда: “Бұл ішетін нәрсе емес қой” 🤔».
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="accordion-item">
+            <h2 class="accordion-header" id="heading7">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapse7" aria-expanded="false" aria-controls="collapse7">
+                    7. Сіздерде тестер бар ма?
+                </button>
+            </h2>
+            <div id="collapse7" class="accordion-collapse collapse" aria-labelledby="heading7"
+                data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    Иә, бізде тестерлер бар. Олар сапасы мен иісі жағынан 100% бірдей, тек қаптамасы қарапайымырақ және бағасы төмен болады. Яғни, аз ақшаға оригинал хош иісті иелене аласыз.
+<br><br>Мем: «Қарапайым қорап, иісі миллионердікі 😏».
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading8">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapse8" aria-expanded="false" aria-controls="collapse8">
+                    8. Ерекше жағдайға қандай парфюм ұсынасыздар?
+                </button>
+            </h2>
+            <div id="collapse8" class="accordion-collapse collapse" aria-labelledby="heading8"
+                data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    Той, кештер немесе салтанатты шаралар үшін тәтті әрі ащылау композициялар жарасады. Ал романтикалық кездесу үшін нәзік гүлді, жемісті немесе ванильді хош иістер ұсынылады. Дұрыс таңдалған иіс сізді ерекше әсерлі етіп көрсетеді.
+<br><br>Мем: «Кездесуге барғанда: “Бұл мен емес, бұл Dior” 😌».
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading9">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapse9" aria-expanded="false" aria-controls="collapse9">
+                   9. Егер парфюм ұнамаса, қайтарып беруге бола ма?
+                </button>
+            </h2>
+            <div id="collapse9" class="accordion-collapse collapse" aria-labelledby="heading9"
+                data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    Егер қорабы ашылмаған болса, парфюмді қайтарып беруге немесе ауыстыруға болады. Ал егер ашылып үлгерсе, ол иіс сіздің таңдауыңыз болып саналады. Сондықтан сатып аларда сенімді болып алған дұрыс.
+<br><br>Мем: «Ұнамағанын ашып қойсаң – жаңа стиль деп қабылдауға тура келеді 😅».
+                </div>
+            </div>
+        </div> -->
+
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading10">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapse10" aria-expanded="false" aria-controls="collapseFour">
+                    7. Сертификат барма?
+                </button>
+            </h2>
+            <div id="collapse10" class="accordion-collapse collapse" aria-labelledby="headingFour"
+                data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <img src="images/certificat1.jpeg" alt="certificat" style="width: 100%;">
+                    <hr>
+                    <img src="images/certificat2.jpeg" alt="certificat" style="width: 100%;">
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+
+    <footer class="footer" style="background-color: #000000f9;">
+        <div class="footer-top">
+            <div class="footer-logo">
+                <!-- <img src="images/logo2.jpg" alt="Kausar" style="width: 100px; height: 100px;"> -->
+                <!-- <h2>LA-ROSSA</h2> -->
+            </div>
+            <div class="footer-socials">
+                <a href="" target="_blank"><img src="images/insta.svg" alt="Instagram" style="width: 45px;"></a>
+                <a href="" target="_blank"><img src="images/tiktok.svg" alt="TikTok" style="width: 45px;"></a>
+            </div>
+            <p class="lora" style="font-size: 0.9em; margin-bottom: 0px; margin-top: 10px; color: white;">©2025 LA-ROSSA
+                парфюмерия желісі</p>
+                <a href="admin-panel.html" style="text-decoration: none;">
+                    <p>LA-ROSSA</p>
+                </a>
+        </div>
+
+        <hr>
+
+        <div class="footer-tab"
+            style="width: 100%; position: fixed; bottom: 0px; height: 70px; background-color: #000000e7; display: flex; justify-content: space-around; align-items: center; margin-left: -20px;">
+            <a href="/">
+                <div class="sect"
+                    style="display: flex; justify-content: center; align-items: center; flex-direction: column; margin-top: 10px;">
+                    <ion-icon name="home" style="width: 30px; height: 30px; color: #ffffff; margin: 0px;"></ion-icon>
+                    <p style="font-size: 0.7em; margin-top: 0px; margin-bottom: 10px; color: white;" class="lora">Главная</p>
+                </div>
+            </a>
+            <a href="catalog.html" style="text-decoration: none;">
+                <div class="sect"
+                    style="display: flex; justify-content: center; align-items: center; flex-direction: column; margin-top: 10px;">
+                    <ion-icon name="today" style="width: 30px; height: 30px;  color: white; margin: 0px;"></ion-icon>
+                    <p style="font-size: 0.7em; margin-top: 0px; margin-bottom: 10px; color: white;" class="lora">Каталог</p>
+                </div>
+            </a>
+            <a style="text-decoration: none;" data-bs-toggle="modal" href="#exampleModalToggle" role="button">
+                <div class="sect"
+                    style="display: flex; justify-content: center; align-items: center; flex-direction: column; margin-top: 10px;">
+                    <ion-icon name="gift" style="width: 30px; height: 30px; color: #ffffff; margin: 0px;"></ion-icon>
+                    <p style="font-size: 0.7em; margin-top: 0px; margin-bottom: 0px; color: white;" class="lora">
+                        Подарочный<br>сертификат</p>
+                </div>
+            </a>
+            <a href="tehpod.html" style="text-decoration: none;">
+                <div class="sect"
+                    style="display: flex; justify-content: center; align-items: center; flex-direction: column; margin-top: 10px;">
+                    <ion-icon name="help-circle"
+                        style="width: 30px; height: 30px; color: rgba(91, 140, 255, 0.715); margin: 0px;"></ion-icon>
+                    <p
+                        style="font-size: 0.7em; margin-top: 0px; margin-bottom: 10px; color: rgba(91, 140, 255, 0.715);" class="lora">
+                        О нас</p>
+                </div>
+            </a>
+        </div>
+
+        <!-- <div class="footer-bottom">
+    
+    <div class="developer">
+      <span class="alice" style="font-size: 1.2em;">Сайтты жасаған:</span>
+      <a href="https://wa.me/77750726045?text=%D0%A1%D3%99%D0%BB%D0%B5%D0%BC%D0%B5%D1%82%D1%81%D1%96%D0%B7%20%D0%B1%D0%B5!%20%D0%9C%D0%B5%D0%BD%20%D0%A2%D0%B0%D0%B9%D2%9A%D0%B0%D0%B7%D0%B0%D0%BD%20%D1%81%D0%B0%D0%B9%D1%82%D1%8B%D0%BD%D0%B0%D0%BD%20%D3%A9%D1%82%D1%82%D1%96%D0%BC!%20" target="_blank"><img src="images/my.jpg" alt="NAQTY.KZ"></a>
+    </div>
+    <br>
+    
+  </div> -->
+    </footer>
+
+
+    <!-- Сол жақтағы "Жоғары" батырмасы -->
+
+    <button class="floating-btn left" id="scrollTopBtn"
+        style="margin-bottom: 60px; width: 50px; height: 50px; background-color: white; color: #000; box-shadow: 0px 0px 10px black;">↑</button>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script>
+        /** ------------ Utils -------------- **/
+        const fmt = n => n.toLocaleString('ru-RU') + ' ₸';
+        const basePrice = p => (p.prices[50] ?? Object.values(p.prices)[0]); // сортировка үшін
+        function saveCart() { localStorage.setItem('cart-v1', JSON.stringify(cart)); }
+        function loadCart() { try { return JSON.parse(localStorage.getItem('cart-v1') || '{}'); } catch { return {}; } }
+        function keyOf(id, size) { return `${id}_${size}`; }
+
+
+
+        /** ------------ State -------------- **/
+        let currentCat = 'all';
+        let currentSort = 'popular';
+        let cart = loadCart();
+        let modalState = { product: null, size: null };
+
+
+        /** ------------ Tabs & Sort -------------- **/
+        document.getElementById('tabs').addEventListener('click', (e) => {
+            const t = e.target.closest('.tab'); if (!t) return;
+            document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+            t.classList.add('active');
+            currentCat = t.dataset.cat;
+            renderGrid();
+        });
+        document.getElementById('sortSel').addEventListener('change', (e) => {
+            currentSort = e.target.value; renderGrid();
+        });
+
+    </script>
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+        crossorigin="anonymous"></script>
+
+
+    <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+
+
+    <script>
+        const scrollTopBtn = document.getElementById('scrollTopBtn');
+        const orderBtn = document.getElementById('orderBtn');
+        const header = document.querySelector('header');
+
+        window.addEventListener('scroll', () => {
+            const headerBottom = header.offsetHeight;
+            if (window.scrollY > headerBottom) {
+                scrollTopBtn.classList.add('show');
+                orderBtn.classList.add('show');
+            } else {
+                scrollTopBtn.classList.remove('show');
+                orderBtn.classList.remove('show');
+            }
+        });
+
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+
+
+
+
+
+
+
+</body>
+
+</html>
