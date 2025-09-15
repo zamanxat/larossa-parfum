@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="kk">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Сыйлық сертификаты — LA ROSSA</title>
+<meta name="description" content="Сертификат жасап жақындарыңызды қуантыңыз! | LA ROSSA🫀🥰">
+<link rel="shortcut icon" href="logo.JPG" type="image/x-icon">
+<link rel="stylesheet" href="style.css">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+
+<!-- jsPDF for PDF export -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+  :root{
+    --bg1:#000;
+    --bg2:#111;
+    --gold:#d4af37;
+  }
+  
+  html,body{height:100%;margin:0;background:linear-gradient(135deg,var(--bg1),#0b0b0b);font-family:Inter, Arial, sans-serif;color:#fff}
+  body {
+    background-color: black;
+  }
+  html {
+    background-color: #000;
+  }
+  .wrap{min-height:100%;display:flex;align-items:center;justify-content:center;padding:36px}
+  .card{width:100%;max-width:1100px;display:grid;grid-template-columns:360px 1fr;gap:28px;align-items:start}
+  .panel{background:rgba(18,18,18,0.9);padding:22px;border-radius:14px;box-shadow:0 10px 40px rgba(0,0,0,0.7)}
+  h1{margin:0 0 10px;font-size:20px;text-shadow:0 0 18px rgba(212,175,55,0.08)}
+  label{display:block;margin-top:12px;font-size:13px;color:#ddd}
+  input, select, button{width:100%;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:#fff;font-size:15px}
+  button{background:linear-gradient(90deg,var(--gold),#f7d36b);color:#050505;font-weight:700;cursor:pointer;border:none;margin-top:12px;box-shadow:0 6px 18px rgba(212,175,55,0.12);transition:transform .18s}
+  button:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(212,175,55,0.18)}
+  .muted{color:#aaa;font-size:13px;margin-top:8px}
+  .preview{display:flex;flex-direction:column;align-items:center;gap:12px}
+  canvas{width:100%;max-width:900px;border-radius:12px;box-shadow:0 12px 40px rgba(0,0,0,0.7),0 0 40px rgba(212,175,55,0.06);background:#000}
+  .controls{display:flex;gap:8px;flex-wrap:wrap}
+  .small{padding:8px 12px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:transparent;cursor:pointer}
+  #status{color:#cfcfcf;font-size:13px;margin-top:8px}
+  @media(max-width:880px){.card{grid-template-columns:1fr;}}
+
+
+
+
+
+
+
+
+  :root {
+            --bg: #0f1115;
+            --card: #151923;
+            --muted: #8b93a7;
+            --text: #e8ecf3;
+            --accent: #5b8cff;
+            --accent-2: #35d0a3;
+            --danger: #ff6b6b;
+            --shadow: 0 10px 30px rgba(0, 0, 0, .35);
+            --radius: 14px;
+        }
+
+        /* Header */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 30;
+            backdrop-filter: blur(10px);
+            background: rgba(15, 17, 21, .85);
+            border-bottom: 1px solid rgba(255, 255, 255, .06);
+        }
+
+        .wrap {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 14px 16px;
+            display: flex;
+            gap: 14px;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            letter-spacing: .5px
+        }
+
+        .brand .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            box-shadow: 0 0 12px var(--accent)
+        }
+
+        .filters {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap
+        }
+
+        .tabs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap
+        }
+
+        .tab {
+            color: white;
+            padding: 8px 12px;
+            border: 1px solid rgba(255, 255, 255, .1);
+            border-radius: 10px;
+            cursor: pointer;
+            background: #111521;
+            transition: .2s
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, rgba(91, 140, 255, .18), rgba(53, 208, 163, .18));
+            border-color: rgba(255, 255, 255, .2)
+        }
+
+        .sort {
+            display: flex;
+            align-items: center;
+            gap: 8px
+        }
+
+        select {
+            background: #111521;
+            border: 1px solid rgba(255, 255, 255, .12);
+            color: var(--text);
+            padding: 8px 12px;
+            border-radius: 10px;
+        }
+</style>
+</head>
+<body style="background-color: #000; width: 100%; height: 100%;">
+  <div class="topbar" style="margin: 0px; margin-bottom: 20px;">
+        <div class="wrap">
+            <div class="brand"><span class="dot"></span> <span><a href="#">
+                        <img src="images/logo2.jpg" alt="logo" style="width: 70px; border-radius: 10px;">
+                    </a></span></div>
+            <div class="filters">
+                <div class="tabs" id="tabs">
+                    <!-- <a href="#biz" style="text-decoration: none;"><button class="tab active" style="width: ұ0px; height: 33px; font-size: 13.5px; display: flex; align-items: center; justify-content: center;">Біз жайлы</button></a>
+                    <a href="#faqs" style="text-decoration: none;"><button class="tab " style="width: 75px; height: 33px; font-size: 13.5px; display: flex; align-items: center; justify-content: center;">FAQ</button></a>
+                    <a href="trec.html" style="text-decoration: none;"><button class="tab" style="width: 90px; height: 33px; font-size: 13.5px; display: flex; align-items: center; justify-content: center;">Доставка</button></a>
+                    <a href="tel://87781473353" target="_blank" style="text-decoration: none;"><button class="tab active" style="width: 76px; height: 33px; font-size: 13.5px; display: flex; align-items: center; justify-content: center;">Байланыс</button></a> -->
+                </div>
+                <div class="sort">
+                    <!-- <label for="sortSel" class="sr"></label>
+                    <select id="sortSel">
+                        <option value="popular">Сұраныс (әдепкі)</option>
+                        <option value="price-asc">Баға жоғарылау ↑</option>
+                        <option value="price-desc">Баға төмендеу ↓</option>
+                        <option value="name-asc">Атауы А–Я</option>
+                    </select> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+  <div class="wrap">
+    <div class="card">
+      <!-- LEFT: form -->
+      <div class="panel">
+        <h1>Сыйлық сертификат жасау</h1>
+
+        <label>Аты-жөні</label>
+        <input id="inpName" placeholder="Получатель">
+
+        <label>Email</label>
+        <input id="inpEmail" type="email" placeholder="larossa@mail.ru">
+
+        <label>Телефон</label>
+        <input id="inpPhone" placeholder="+7 707 123 4567">
+
+        <label>Номинал</label>
+        <select id="inpAmount">
+          <option value="21990" selected>24 490 ₸</option>
+          <option value="34990">36 490 ₸</option>
+          <option value="54990">58 490 ₸</option>
+          <option value="50000">82 980 ₸</option>
+        </select>
+<br><br>
+        <div class="muted"><span style="color: rgba(255, 255, 255, 0.741); background-color: #2d2d2d; width: 20x; border-radius: 10px; padding-left: 10px; padding-right: 10px; padding-top: 5px; padding-bottom: 5px; font-size: 1.3em">Ескерту!</span><br><br>Сертификат жасағаннан кейін уникал номеріңізді <a href="https://wa.me/77781473353" style="text-decoration: none; color: #5b8cff;">біздің менеджерлерімізге </a>айтып растаңыз!</div><br>
+
+        <button id="generateBtn">Сертификат жасау</button>
+        <div style="display:flex;gap:10px;margin-top:10px">
+          <button id="downloadPng" class="small" style="display:none; color: white;">PNG жүктеу</button>
+          <button id="downloadPdf" class="small" style="display:none; color: white;">PDF жүктеу</button>
+          <button id="copyCode" class="small" style="display:none; color: white;">Нөмірді көшіру</button>
+        </div>
+
+        <div id="status">Күту...</div>
+        <!-- <div class="muted" style="margin-top:10px;font-size:13px">Егер фон сыртқы URL-дан алынса — CORS саясатынан сақ болыңыз: жүктелген сурет бірдей доменде немесе CORS-қа рұқсат берілген болуы керек (немесе суретті жүктеп сол папкаға салыңыз).</div> -->
+      </div>
+
+      <!-- RIGHT: preview -->
+      <div class="panel preview">
+        <div style="text-align:center;color:#ddd">Сертификат</div>
+        <canvas id="voucherCanvas" width="1200" height="800" aria-label="Сертификат превью"></canvas>
+        <div style="font-size:13px;color:#ccc; margin-bottom: 60px;">Номер: <strong id="codeDisplay">—</strong></div>
+      </div>
+    </div>
+  </div>
+
+
+  
+
+
+
+    <div class="footer-tab"
+            style="width: 100%; position: fixed; bottom: 0px; height: 70px; background-color: #000000e7; display: flex; justify-content: space-around; align-items: center;">
+            <a href="/" style="text-decoration: none;">
+                <div class="sect"
+                    style="display: flex; justify-content: center; align-items: center; flex-direction: column; margin-top: 10px;">
+                    <ion-icon name="home" style="width: 30px; height: 30px; color: #ffffff; margin: 0px;"></ion-icon>
+                    <p style="font-size: 0.7em; margin-top: 0px; margin-bottom: 10px; color: white;" class="lora">Главная</p>
+                </div>
+            </a>
+            <a href="catalog.html" style="text-decoration: none;">
+                <div class="sect"
+                    style="display: flex; justify-content: center; align-items: center; flex-direction: column; margin-top: 10px;">
+                    <ion-icon name="today" style="width: 30px; height: 30px;  color: white; margin: 0px;"></ion-icon>
+                    <p style="font-size: 0.7em; margin-top: 0px; margin-bottom: 10px; color: white;" class="lora">Каталог</p>
+                </div>
+            </a>
+            <a style="text-decoration: none;" href="certificate.html">
+                <div class="sect"
+                    style="display: flex; justify-content: center; align-items: center; flex-direction: column; margin-top: 10px;">
+                    <ion-icon name="gift" style="width: 30px; height: 30px; color: rgba(91, 140, 255, 0.715); margin: 0px;"></ion-icon>
+                    <p style="font-size: 0.7em; margin-top: 0px; margin-bottom: 0px; color: rgba(91, 140, 255, 0.715);" class="lora">
+                        Подарочный<br>сертификат</p>
+                </div>
+            </a>
+            <a href="tehpod.html" style="text-decoration: none;">
+                <div class="sect"
+                    style="display: flex; justify-content: center; align-items: center; flex-direction: column; margin-top: 10px;">
+                    <ion-icon name="help-circle"
+                        style="width: 30px; height: 30px; color: rgb(255, 255, 255); margin: 0px;"></ion-icon>
+                    <p
+                        style="font-size: 0.7em; margin-top: 0px; margin-bottom: 10px; color: rgb(255, 255, 255);" class="lora">
+                        О нас</p>
+                </div>
+            </a>
+        </div>
+
+
+<script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+
+
+
+
+<script>
+const IMAGE_SRC = 'Gold Black Luxury Gift Voucher.png'; 
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxP_z283gTacl7v8OVL6XwmPibbjIGWqxZp05eNFXWLCssuW1cLQYhJPjh5GhfpjXYo/exec';
+
+const canvas = document.getElementById('voucherCanvas');
+const ctx = canvas.getContext('2d', {alpha: false});
+const generateBtn = document.getElementById('generateBtn');
+const downloadPng = document.getElementById('downloadPng');
+const downloadPdf = document.getElementById('downloadPdf');
+const copyCodeBtn = document.getElementById('copyCode');
+const statusEl = document.getElementById('status');
+const codeDisplay = document.getElementById('codeDisplay');
+
+const inpName = document.getElementById('inpName');
+const inpEmail = document.getElementById('inpEmail');
+const inpPhone = document.getElementById('inpPhone');
+const inpAmount = document.getElementById('inpAmount');
+
+const POS = {
+  name:   {x:0.12, y:0.42, align:'left', sizeRatio:0.065, font:'Playfair Display'},  
+  amount: {x:0.12, y:0.52, align:'left', sizeRatio:0.05, font:'Montserrat'},  
+  date:   {x:0.88, y:0.22, align:'right', sizeRatio:0.035, font:'Montserrat'},  
+  code:   {x:0.5,  y:0.92, align:'center', sizeRatio:0.03, font:'Montserrat'}  
+};
+
+const bg = new Image();
+bg.crossOrigin = 'anonymous';
+bg.src = IMAGE_SRC;
+
+let lastGenerated = null; 
+function setStatus(t){ statusEl.textContent = t; }
+
+function genCodeOnce(){
+  const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const L = () => letters[Math.floor(Math.random()*letters.length)];
+  const D = () => String(Math.floor(Math.random()*10));
+  return `LR-2025-${L()}${D()}${L()}${D()}`;
+}
+
+async function checkCodeWithServer(code){
+  if(!GOOGLE_SCRIPT_URL) return false;
+  try{
+    const r = await fetch(GOOGLE_SCRIPT_URL, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({action:'check', code})
+    });
+    if(!r.ok) return false;
+    const j = await r.json();
+    return !!j.exists;
+  }catch(e){
+    console.warn('checkCodeWithServer failed', e);
+    return false; 
+  }
+}
+
+async function produceUniqueCode(){
+  let attempts = 0;
+  while(attempts < 12){
+    const c = genCodeOnce();
+    const exists = await checkCodeWithServer(c);
+    if(!exists) return c;
+    attempts++;
+  }
+  throw new Error('Уникал код табылмады (көбірек талпынып көріңіз)');
+}
+
+async function saveToServer(payload){
+  if(!GOOGLE_SCRIPT_URL){ console.log('Demo save (no server). Payload:', payload); return {ok:true}; }
+  try{
+    const r = await fetch(GOOGLE_SCRIPT_URL, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({action:'save', payload})
+    });
+    const j = await r.json();
+    return j;
+  }catch(e){
+    console.warn('saveToServer failed', e);
+    return {ok:false};
+  }
+}
+
+function renderOnCanvas(payload){
+  const w = canvas.width, h = canvas.height;
+  if(bg && bg.naturalWidth){
+    const ratio = Math.max(w/bg.naturalWidth, h/bg.naturalHeight);
+    const dw = bg.naturalWidth * ratio, dh = bg.naturalHeight * ratio;
+    const dx = (w - dw)/2, dy = (h - dh)/2;
+    ctx.drawImage(bg, dx, dy, dw, dh);
+  }else{
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0,0,w,h);
+  }
+
+  function drawText(txt, pos){
+    const fontSize = Math.round(Math.max(14, canvas.width * pos.sizeRatio));
+    ctx.font = `700 ${fontSize}px '${pos.font}', serif`;
+    ctx.textAlign = pos.align;
+    ctx.textBaseline = 'middle';
+    const x = Math.round(canvas.width * pos.x);
+    const y = Math.round(canvas.height * pos.y);
+
+    // gold gradient
+    const grad = ctx.createLinearGradient(x-50, y-50, x+50, y+50);
+    grad.addColorStop(0,'#FFD700');
+    grad.addColorStop(1,'#FFC000');
+    ctx.fillStyle = grad;
+
+    ctx.lineWidth = Math.max(1, fontSize * 0.06);
+    ctx.strokeStyle = 'rgba(0,0,0,0.6)';
+    ctx.strokeText(txt,x,y);
+    ctx.fillText(txt,x,y);
+  }
+
+  drawText(payload.name || 'LA ROSSA PERFUME', POS.name);
+  drawText(payload.amount_text || payload.amount + ' ₸', POS.amount);
+  drawText(payload.date, POS.date);
+  drawText(payload.code, POS.code);
+}
+
+function drawPreviewTemp(){
+  const temp = {
+    name: inpName.value || 'LA ROSSA PERFUME',
+    amount_text: (inpAmount.options[inpAmount.selectedIndex].text) || '24 490 ₸',
+    date: (new Date()).toLocaleDateString('kk-KZ'),
+    code: 'LR-2025-XXXX'
+  };
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  renderOnCanvas(temp);
+}
+
+bg.onload = () => { drawPreviewTemp(); setStatus('Фон жүктелді — дайынсыз.'); };
+bg.onerror = () => { drawPreviewTemp(); setStatus('Фон жүктелмеді — суретті тексеріңіз.'); };
+[inpName, inpAmount].forEach(el => el.addEventListener('input', drawPreviewTemp));
+
+generateBtn.addEventListener('click', async () => {
+  generateBtn.disabled = true;
+  setStatus('Уникал код жасалуда...');
+  try{
+    const code = await produceUniqueCode();
+    const payload = {
+      code,
+      name: inpName.value || '',
+      email: inpEmail.value || '',
+      phone: inpPhone.value || '',
+      amount: inpAmount.value || '',
+      amount_text: inpAmount.options[inpAmount.selectedIndex].text,
+      date: (new Date()).toISOString(),
+      design: IMAGE_SRC
+    };
+    setStatus('Сақталып жатыр...');
+    const saveRes = await saveToServer(payload);
+    if(saveRes && saveRes.ok !== false){ setStatus('Сертификат дайын.'); } 
+    else { setStatus('Локаль режим: сертификат дайын (сервиске жазылмады).'); }
+
+    codeDisplay.textContent = code;
+    lastGenerated = payload;
+    renderOnCanvas({
+      name: payload.name || 'LA ROSSA PERFUME',
+      amount_text: payload.amount_text,
+      date: new Date(payload.date).toLocaleDateString('kk-KZ'),
+      code: payload.code
+    });
+
+    downloadPng.style.display = 'inline-block';
+    downloadPdf.style.display = 'inline-block';
+    copyCodeBtn.style.display = 'inline-block';
+  }catch(err){
+    console.error(err);
+    setStatus('Қате: ' + (err.message || err));
+  }finally{ generateBtn.disabled = false; }
+});
+
+copyCodeBtn.addEventListener('click', ()=>{
+  if(!lastGenerated){ setStatus('Алдымен сертификат жасаңыз.'); return; }
+  navigator.clipboard?.writeText(lastGenerated.code).then(()=> setStatus('Нөмір көшірілді') ).catch(()=> setStatus('Көшірілмеді'));
+});
+
+downloadPng.addEventListener('click', ()=>{
+  try{
+    const dataUrl = canvas.toDataURL('image/png');
+    const a = document.createElement('a');
+    a.href = dataUrl;
+    a.download = (lastGenerated?.code || 'certificate') + '.png';
+    a.click();
+    setStatus('PNG жүктелді');
+  }catch(e){
+    console.error(e);
+    alert('PNG генерациясы мүмкін болмады. CORS себеп. Фонды сол доменге қойыңыз.');
+    setStatus('PNG жүктеу қателігі.');
+  }
+});
+
+downloadPdf.addEventListener('click', async ()=>{
+  try{
+    const dataUrl = canvas.toDataURL('image/png');
+    const img = new Image();
+    img.src = dataUrl;
+    img.onload = () => {
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF({unit:'px', format:[canvas.width, canvas.height]});
+      pdf.addImage(img, 'PNG', 0, 0, canvas.width, canvas.height);
+      pdf.save((lastGenerated?.code || 'certificate') + '.pdf');
+      setStatus('PDF жүктелді');
+    };
+  }catch(e){
+    console.error(e);
+    alert('PDF генерациясы мүмкін болмады. PNG жүктеп көріңіз.');
+    setStatus('PDF жүктеу қателігі.');
+  }
+});
+
+drawPreviewTemp();
+</script>
+</body>
+</html>
